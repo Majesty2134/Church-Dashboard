@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login – RCCG ON EAGLES WINGS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body.login-page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: var(--bg);
+      padding: 24px 16px;
+    }
+    .login-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.07);
+    }
+    .login-header {
+      background: var(--green-dark);
+      padding: 32px 32px 28px;
+      text-align: center;
+    }
+    .login-icon {
+      font-size: 22px;
+      color: var(--green-bright);
+      width: 48px;
+      height: 48px;
+      border: 1.5px solid rgba(90,184,122,0.4);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .login-church { font-size: 10px; letter-spacing: 0.1em; color: #8ab89a; font-weight: 500; margin-bottom: 6px; }
+    .login-title  { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: #e8f5ee; }
+    .login-body   { padding: 28px 32px 32px; }
+    .login-body .form-group { margin-bottom: 16px; }
+    .error-msg {
+      background: #fdecea;
+      color: #9e2a1c;
+      border: 1px solid #f5c0bb;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .login-note {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body class="login-page">
+
+  <div class="login-card">
+    <div class="login-header">
+    <img src="image/oew_logo (2).png" alt="Church Logo" class="church-logo">
+      <div class="church-name">RCCG ON EAGLES WINGS</div>
+      <div class="login-title">Admin Login</div>
+    </div>
+
+    <div class="login-body">
+      <div id="error-msg" class="error-msg">Incorrect email or password. Please try again.</div>
+
+      <div class="form-group">
+        <label for="login-email">Email address</label>
+        <input type="email" id="login-email" placeholder="admin@graceassembly.org" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password">
+      </div>
+
+      <button class="submit-btn" onclick="handleLogin()">Sign in to dashboard</button>
+
+      <p class="login-note">
+        Only authorised administrators can access this page.<br>
+        Contact your church coordinator if you need access.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    if (sessionStorage.getItem('adminLoggedIn')) {
+      window.location.href = 'admin.html';
+    }
+
+    document.getElementById('login-password').addEventListener('keydown', e => {
+      if (e.key === 'Enter') handleLogin();
+    });
+
+    function handleLogin() {
+      const email    = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const errorEl  = document.getElementById('error-msg');
+
+      // Change these to your real credentials before going live
+      const ADMIN_EMAIL    = 'admin@church.com';
+      const ADMIN_PASSWORD = 'admin1234';
+
+      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+        sessionStorage.setItem('adminLoggedIn', 'true');
+        window.location.href = 'admin.html';
+      } else {
+        errorEl.style.display = 'block';
+        document.getElementById('login-password').value = '';
+        document.getElementById('login-password').focus();
+      }
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RCCG ON EAGLES WINGS — Member Registry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body class="login-page">
+    <aside class="sidebar">
+<div class="sidebar-footer">
+    <div class="user-badge">
+      <div class="user-avatar">A</div>
+      <div>
+        <div class="user-name" id="sidebar-username">Admin</div>
+        <div class="user-role">Team Member</div>
+      </div>
+    </div>
+    <button class="logout-btn" onclick="logout()">Sign out</button>
+  </div>
+</aside>
+
+<div class="login-bg">
+  <div class="login-cross"></div>
+</div>
+
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="login-logo">
+       <img src="images/oew_logo (2).png" alt="RCCG ON EAGLES WINGS">
+      <span class="logo-name">RCCG ON EAGLES WINGS</span>
+      <span class="logo-sub">Members Registry</span>
+    </div>
+
+    <h1 class="login-title">Welcome back</h1>
+    <p class="login-desc">Sign in to access the member registry</p>
+
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="username" placeholder="Enter your username" />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Enter your password" />
+    </div>
+    <div id="login-error" class="login-error" style="display:none">Incorrect username or password</div>
+    <button class="btn-full" onclick="doLogin()">Sign In</button>
+
+    
+  </div>
+</div>
+
+<script>
+function doLogin() {
+  const u = document.getElementById('username').value.trim();
+  const p = document.getElementById('password').value.trim();
+  const err = document.getElementById('login-error');
+  if (u === 'admin' && p === 'grace2024') {
+    sessionStorage.setItem('gc_auth', '1');
+    sessionStorage.setItem('gc_user', u);
+    window.location.href = 'dashboard.html';
+  } else {
+    err.style.display = 'block';
+    document.getElementById('password').value = '';
+  }
+}
+document.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+if (sessionStorage.getItem('gc_auth')) window.location.href = 'dashboard.html';
+</script>
+</body>
+</html>
