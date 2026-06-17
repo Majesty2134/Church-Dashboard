@@ -87,7 +87,7 @@
         <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password">
       </div>
 
-      <button class="submit-btn" onclick="handleLogin()">Sign in to dashboard</button>
+      <button class="submit-btn">Sign in to dashboard</button>
 
       <p class="login-note">
         Only authorised administrators can access this page.<br>
@@ -96,34 +96,56 @@
     </div>
   </div>
 
-  <script>
-    if (sessionStorage.getItem('adminLoggedIn')) {
-      window.location.href = 'admin.html';
+ <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCdY6V4D_xXhI1tpSSLNv93cFWpMddQ94U",
+    authDomain: "on-eagles-wings-1c8f5.firebaseapp.com",
+    projectId: "on-eagles-wings-1c8f5",
+    storageBucket: "on-eagles-wings-1c8f5.firebasestorage.app",
+    messagingSenderId: "858585282489",
+    appId: "1:858585282489:web:b7849b092456f445956868"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // If already logged in, go straight to dashboard
+  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+  onAuthStateChanged(auth, (user) => {
+    if (user) window.location.href = 'index.html';
+  });
+
+  document.getElementById('login-password').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleLogin();
+  });
+
+  document.querySelector('.submit-btn').addEventListener('click', handleLogin);
+
+  async function handleLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const errorEl = document.getElementById('error-msg');
+    const btn = document.querySelector('.submit-btn');
+
+    errorEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Signing in...';
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      window.location.href = 'index.html';
+    } catch (err) {
+      errorEl.style.display = 'block';
+      document.getElementById('login-password').value = '';
+      document.getElementById('login-password').focus();
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Sign in to dashboard';
     }
-
-    document.getElementById('login-password').addEventListener('keydown', e => {
-      if (e.key === 'Enter') handleLogin();
-    });
-
-    function handleLogin() {
-      const email    = document.getElementById('login-email').value.trim();
-      const password = document.getElementById('login-password').value;
-      const errorEl  = document.getElementById('error-msg');
-
-      // Change these to your real credentials before going live
-      const ADMIN_EMAIL    = 'admin@church.com';
-      const ADMIN_PASSWORD = 'admin1234';
-
-      if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-        sessionStorage.setItem('adminLoggedIn', 'true');
-        window.location.href = 'admin.html';
-      } else {
-        errorEl.style.display = 'block';
-        document.getElementById('login-password').value = '';
-        document.getElementById('login-password').focus();
-      }
-    }
-  </script>
-
+  }
+</script>
 </body>
 </html>

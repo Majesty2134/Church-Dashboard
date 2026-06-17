@@ -1,74 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>RCCG ON EAGLES WINGS — Member Registry</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard – RCCG ON EAGLES WINGS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="login-page">
-    <aside class="sidebar">
-<div class="sidebar-footer">
-    <div class="user-badge">
-      <div class="user-avatar">A</div>
+<body>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <img src="image/oew_logo (2).png" alt="Church Logo" class="church-logo">
       <div>
-        <div class="user-name" id="sidebar-username">Admin</div>
-        <div class="user-role">Team Member</div>
+        <div class="church-name">RCCG ON EAGLES WINGS</div>
+        <h1 class="page-title">Admin Dashboard</h1>
       </div>
     </div>
-    <button class="logout-btn" onclick="logout()">Sign out</button>
-  </div>
-</aside>
+    <button id="logout-btn" class="logout-btn">Log out</button>
+  </header>
 
-<div class="login-bg">
-  <div class="login-cross"></div>
-</div>
+  <!-- NAV TABS -->
+  <nav class="nav-tabs">
+    <button class="nav-btn active" data-tab="overview">Overview</button>
+    <button class="nav-btn" data-tab="workers">Workers</button>
+    <button class="nav-btn" data-tab="attendance">Attendance</button>
+  </nav>
 
-<div class="login-wrap">
-  <div class="login-card">
-    <div class="login-logo">
-       <img src="images/oew_logo (2).png" alt="RCCG ON EAGLES WINGS">
-      <span class="logo-name">RCCG ON EAGLES WINGS</span>
-      <span class="logo-sub">Members Registry</span>
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- METRIC CARDS -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Total workers</div>
+        <div class="metric-value" id="total-workers">0</div>
+        <div class="metric-sub">Across all departments</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">This Sunday</div>
+        <div class="metric-value" id="this-sunday">0</div>
+        <div class="metric-sub">Workers present</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Attendance rate</div>
+        <div class="metric-value" id="att-rate">-</div>
+        <div class="metric-sub">Last 4 Sundays avg</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Departments</div>
+        <div class="metric-value" id="dept-count">-</div>
+        <div class="metric-sub">Active departments</div>
+      </div>
     </div>
 
-    <h1 class="login-title">Welcome back</h1>
-    <p class="login-desc">Sign in to access the member registry</p>
-
-    <div class="form-group">
-      <label>Username</label>
-      <input type="text" id="username" placeholder="Enter your username" />
+    <!-- OVERVIEW TAB -->
+    <div id="tab-overview" class="tab-panel active">
+      <div class="section-title">Department breakdown</div>
+      <div class="card" id="dept-chart"></div>
     </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" id="password" placeholder="Enter your password" />
+
+    <!-- WORKERS TAB -->
+    <div id="tab-workers" class="tab-panel">
+      <div class="table-header">
+        <div class="section-title">All workers</div>
+        <div class="filters">
+          <input type="text" id="worker-search" placeholder="Search name…">
+          <select id="dept-filter">
+            <option value="">All departments</option>
+            <option>Choir</option>
+            <option>Ushering</option>
+            <option>Media &amp; Sound</option>
+            <option>Prayer Team</option>
+            <option>Youth</option>
+            <option>Children's Ministry</option>
+            <option>Protocol</option>
+            <option>Men's Fellowship</option>
+            <option>Women's Fellowship</option>
+          </select>
+        </div>
+      </div>
+      <div class="card table-wrap">
+        <table id="workers-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Title</th>
+              <th>Department</th>
+              <th>Phone</th>
+              <th>Location</th>
+              <th>Date joined</th>
+            </tr>
+          </thead>
+          <tbody id="workers-body"></tbody>
+        </table>
+      </div>
     </div>
-    <div id="login-error" class="login-error" style="display:none">Incorrect username or password</div>
-    <button class="btn-full" onclick="doLogin()">Sign In</button>
 
-    
-  </div>
-</div>
+    <!-- ATTENDANCE TAB -->
+    <div id="tab-attendance" class="tab-panel">
+      <div class="table-header">
+        <div class="section-title">Attendance records</div>
+        <div class="filters">
+          <select id="week-filter">
+            <option value="">All weeks</option>
+          </select>
+          <select id="att-dept-filter">
+            <option value="">All departments</option>
+            <option>Choir</option>
+            <option>Ushering</option>
+            <option>Media &amp; Sound</option>
+            <option>Prayer Team</option>
+            <option>Youth</option>
+            <option>Children's Ministry</option>
+            <option>Protocol</option>
+            <option>Men's Fellowship</option>
+            <option>Women's Fellowship</option>
+          </select>
+        </div>
+      </div>
+      <div class="card table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Department</th>
+              <th>Date</th>
+              <th>Service</th>
+              <th>Status</th>
+              <th>Arrival time</th>
+            </tr>
+          </thead>
+          <tbody id="att-body"></tbody>
+        </table>
+      </div>
+    </div>
 
-<script>
-function doLogin() {
-  const u = document.getElementById('username').value.trim();
-  const p = document.getElementById('password').value.trim();
-  const err = document.getElementById('login-error');
-  if (u === 'admin' && p === 'grace2024') {
-    sessionStorage.setItem('gc_auth', '1');
-    sessionStorage.setItem('gc_user', u);
-    window.location.href = 'dashboard.html';
-  } else {
-    err.style.display = 'block';
-    document.getElementById('password').value = '';
-  }
-}
-document.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
-if (sessionStorage.getItem('gc_auth')) window.location.href = 'dashboard.html';
-</script>
+  </main>
+
+  <script type="module" src="dashboard.js"></script>
 </body>
 </html>
