@@ -101,6 +101,36 @@ body {
   border: 1px solid rgba(90,184,122,0.25);
 }
 
+#login-password{
+   box-sizing: border-box;
+   padding: 7px;
+   border-radius: 5px;
+}
+ .password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  box-sizing: border-box; /* Important */
+  padding-right: 60px;    /* Space for Show/Hide */
+}
+
+#toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 70%;
+  transform: translateY(-50%);
+  border:none;
+  background: transparent;
+  cursor: pointer;
+  padding: 2px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1;
+}
+
 /* ---- Nav Tabs ---- */
 .nav-tabs {
   background: linear-gradient(90deg, rgb(77, 4, 4) 0%,  rgb(56, 56, 12) 100%);

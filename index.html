@@ -3,143 +3,165 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Dashboard – RCCG ON EAGLES WINGS</title>
+  <title>Admin Login – RCCG ON EAGLES WINGS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    body.login-page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: var(--bg);
+      padding: 24px 16px;
+    }
+    .login-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 4px 40px rgba(0,0,0,0.07);
+    }
+    .login-header {
+      background: var(--green-dark);
+      padding: 32px 32px 28px;
+      text-align: center;
+    }
+    .login-icon {
+      font-size: 22px;
+      color: var(--green-bright);
+      width: 48px;
+      height: 48px;
+      border: 1.5px solid rgba(90,184,122,0.4);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .login-church { font-size: 10px; letter-spacing: 0.1em; color: #8ab89a; font-weight: 500; margin-bottom: 6px; }
+    .login-title  { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: #e8f5ee; }
+    .login-body   { padding: 28px 32px 32px; }
+    .login-body .form-group { margin-bottom: 16px; }
+    .error-msg {
+      background: #fdecea;
+      color: #9e2a1c;
+      border: 1px solid #f5c0bb;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .login-note {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+  </style>
 </head>
-<body>
+<body class="login-page">
 
-  <!-- TOP BAR -->
-  <header class="topbar">
-    <div class="topbar-left">
-      <img src="image/oew_logo (2).png" alt="Church Logo" class="church-logo">
-      <div>
-        <div class="church-name">RCCG ON EAGLES WINGS</div>
-        <h1 class="page-title">Admin Dashboard</h1>
-      </div>
-    </div>
-    <button id="logout-btn" class="logout-btn">Log out</button>
-  </header>
-
-  <!-- NAV TABS -->
-  <nav class="nav-tabs">
-    <button class="nav-btn active" data-tab="overview">Overview</button>
-    <button class="nav-btn" data-tab="workers">Workers</button>
-    <button class="nav-btn" data-tab="attendance">Attendance</button>
-  </nav>
-
-  <!-- MAIN CONTENT -->
-  <main class="main-content">
-
-    <!-- METRIC CARDS -->
-    <div class="metrics-grid">
-      <div class="metric-card">
-        <div class="metric-label">Total workers</div>
-        <div class="metric-value" id="total-workers">0</div>
-        <div class="metric-sub">Across all departments</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">This Sunday</div>
-        <div class="metric-value" id="this-sunday">0</div>
-        <div class="metric-sub">Workers present</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">Attendance rate</div>
-        <div class="metric-value" id="att-rate">-</div>
-        <div class="metric-sub">Last 4 Sundays avg</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-label">Departments</div>
-        <div class="metric-value" id="dept-count">-</div>
-        <div class="metric-sub">Active departments</div>
-      </div>
+  <div class="login-card">
+    <div class="login-header">
+    <img src="image/oew_logo (2).png" alt="Church Logo" class="church-logo">
+      <div class="church-name">RCCG ON EAGLES WINGS</div>
+      <div class="login-title">Admin Login</div>
     </div>
 
-    <!-- OVERVIEW TAB -->
-    <div id="tab-overview" class="tab-panel active">
-      <div class="section-title">Department breakdown</div>
-      <div class="card" id="dept-chart"></div>
+    <div class="login-body">
+      <div id="error-msg" class="error-msg">Incorrect email or password. Please try again.</div>
+
+      <div class="form-group">
+        <label for="login-email">Email address</label>
+        <input type="email" id="login-email" placeholder="admin@graceassembly.org" autocomplete="email">
+      </div>
+      <div class="form-group">
+         <div class="password-wrapper">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password">
+         <button type="button" id="toggle-password">Show</button>
+      </div>
+      </div>
+
+      <button class="submit-btn">Sign in to dashboard</button>
+
+      <p class="login-note">
+        Only authorised administrators can access this page.<br>
+        Contact your church coordinator if you need access.
+      </p>
     </div>
+  </div>
 
-    <!-- WORKERS TAB -->
-    <div id="tab-workers" class="tab-panel">
-      <div class="table-header">
-        <div class="section-title">All workers</div>
-        <div class="filters">
-          <input type="text" id="worker-search" placeholder="Search name…">
-          <select id="dept-filter">
-            <option value="">All departments</option>
-            <option>Choir</option>
-            <option>Ushering</option>
-            <option>Media &amp; Sound</option>
-            <option>Prayer Team</option>
-            <option>Youth</option>
-            <option>Children's Ministry</option>
-            <option>Protocol</option>
-            <option>Men's Fellowship</option>
-            <option>Women's Fellowship</option>
-          </select>
-        </div>
-      </div>
-      <div class="card table-wrap">
-        <table id="workers-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Title</th>
-              <th>Department</th>
-              <th>Phone</th>
-              <th>Location</th>
-              <th>Date joined</th>
-            </tr>
-          </thead>
-          <tbody id="workers-body"></tbody>
-        </table>
-      </div>
-    </div>
+<script type="module">
+const passwordInput = document.getElementById('login-password');
+const togglePassword = document.getElementById('toggle-password');
 
-    <!-- ATTENDANCE TAB -->
-    <div id="tab-attendance" class="tab-panel">
-      <div class="table-header">
-        <div class="section-title">Attendance records</div>
-        <div class="filters">
-          <select id="week-filter">
-            <option value="">All weeks</option>
-          </select>
-          <select id="att-dept-filter">
-            <option value="">All departments</option>
-            <option>Choir</option>
-            <option>Ushering</option>
-            <option>Media &amp; Sound</option>
-            <option>Prayer Team</option>
-            <option>Youth</option>
-            <option>Children's Ministry</option>
-            <option>Protocol</option>
-            <option>Men's Fellowship</option>
-            <option>Women's Fellowship</option>
-          </select>
-        </div>
-      </div>
-      <div class="card table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Department</th>
-              <th>Date</th>
-              <th>Service</th>
-              <th>Status</th>
-              <th>Arrival time</th>
-            </tr>
-          </thead>
-          <tbody id="att-body"></tbody>
-        </table>
-      </div>
-    </div>
+togglePassword.addEventListener('click', () => {
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    togglePassword.textContent = 'Hide';
+  } else {
+    passwordInput.type = 'password';
+    togglePassword.textContent = 'Show';
+  }
+});
 
-  </main>
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
-  <script type="module" src="dashboard.js"></script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyCdY6V4D_xXhI1tpSSLNv93cFWpMddQ94U",
+    authDomain: "on-eagles-wings-1c8f5.firebaseapp.com",
+    projectId: "on-eagles-wings-1c8f5",
+    storageBucket: "on-eagles-wings-1c8f5.firebasestorage.app",
+    messagingSenderId: "858585282489",
+    appId: "1:858585282489:web:b7849b092456f445956868"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    window.location.replace('dashboard.html');
+  }
+});
+   
+  document.getElementById('login-password').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleLogin();
+  });
+
+  document.querySelector('.submit-btn').addEventListener('click', handleLogin);
+
+  async function handleLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const errorEl = document.getElementById('error-msg');
+    const btn = document.querySelector('.submit-btn');
+
+    errorEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Signing in...';
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+window.location.replace('dashboard.html');
+    } catch (err) {
+      errorEl.style.display = 'block';
+      document.getElementById('login-password').value = '';
+      document.getElementById('login-password').focus();
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Sign in to dashboard';
+    }
+  }
+</script>
 </body>
 </html>

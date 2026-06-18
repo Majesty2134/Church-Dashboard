@@ -18,12 +18,14 @@ const auth = getAuth(app);
 
 // Auth guard
 onAuthStateChanged(auth, (user) => {
-  if (!user) window.location.href = 'index.html';
+  if (!user) {
+    window.location.replace('index.html');
+  }
 });
 
 // Logout
 document.getElementById('logout-btn').addEventListener('click', () => {
-  signOut(auth).then(() => window.location.href = 'index.html');
+  signOut(auth).then(() => window.location.replace('index.html'));
 });
 
 // ---- Tab switching ----
@@ -126,6 +128,9 @@ function renderWorkers(list) {
       <td style="color:var(--text-secondary);">${w.phone}</td>
       <td style="color:var(--text-secondary);">${w.city || '—'}, ${w.state || '—'}</td>
       <td style="color:var(--text-secondary);">${formatDate(w.dateJoined)}</td>
+      <td style="color:var(--text-secondary);">${w.gender || '—'}</td>
+      <td style="color:var(--text-secondary);">${formatDate(w.dateOfBirth)}</td>
+      <td style="color:var(--text-secondary);">${w.address || '—'}</td>
     </tr>
   `).join('');
 }
