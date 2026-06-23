@@ -498,7 +498,17 @@ textarea { resize: vertical; min-height: 80px; }
   flex-shrink: 0;
 }
 .logout-btn:hover { background: rgba(42,90,64,1); color: #c5e8d0; }
+.brand-name,.EST{
+  color: rgb(20, 20, 20);
+  font-size: 0.2em;
+   position: relative;
+  top: 20px;
+  right: 10px;
+  left: 90px;
+  }
 
+  
+  
 /* ============================================================
    RESPONSIVE
    ============================================================ */
@@ -519,6 +529,12 @@ textarea { resize: vertical; min-height: 80px; }
   .form-grid.two { grid-template-columns: 1fr; }
   .form-group.full { grid-column: 1; }
   .service-grid { grid-template-columns: 1fr; }
+  .brand-name,.EST{
+    position:relative;
+    font-size: 0.75em;
+    left: 80px;
+  }
+  
 }
 
 @media (max-width: 480px) {
